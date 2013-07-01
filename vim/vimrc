@@ -1,0 +1,115 @@
+set modelines=0     " CVE-2007-2438
+set nocompatible    " Use Vim defaults instead of 100% vi compatibility
+set backspace=2     " more powerful backspacing
+
+" Don't write backup file if vim is being called by "crontab -e"
+au BufWrite /private/tmp/crontab.* set nowritebackup
+" Don't write backup file if vim is being called by "chpass"
+au BufWrite /private/etc/pw.* set nowritebackup
+
+" pathogen infection funky filetype hack
+call pathogen#runtime_append_all_bundles()
+filetype off
+syntax on
+filetype plugin indent on
+
+" enable auto indent
+set autoindent
+" indent w/c-style
+set cindent
+" 100 entries in the history
+set history=100
+" adds text to status line describing the cursor's position
+set ruler
+" enable syntax highlighting
+syntax on
+" highlight the last search term
+set hlsearch
+" enable mouse input
+set mouse=a
+" required for most cool vim features, apparently?
+set nocompatible
+" sets up autocompletion
+set wildmenu
+set wildmode=list:longest,full
+" enable line numbers
+set number
+
+" search options
+set ignorecase
+set smartcase
+set incsearch
+set nohidden
+
+" highlight matching ('s and {'s
+highlight MatchParen ctermbg=4
+
+" enable file type detection for automatic syntax highlighting
+filetype plugin on
+filetype plugin indent on 
+
+" file name in terminal window title
+set title
+" disable wrapping
+set nowrap
+
+" disable arrow keys in normal mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" disable arrow keys in insert mode
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
+" color scheme
+if has("gui_running")    
+    colorscheme base16-default
+else
+    set t_Co=256
+    set background=dark
+    colorscheme base16-default
+endif
+
+" Restore cursor position to where it was before
+augroup JumpCursorOnEdit
+   au!
+   autocmd BufReadPost *
+            \ if expand("<afile>:p:h") !=? $TEMP |
+            \   if line("'\"") > 1 && line("'\"") <= line("$") |
+            \     let JumpCursorOnEdit_foo = line("'\"") |
+            \     let b:doopenfold = 1 |
+            \     if (foldlevel(JumpCursorOnEdit_foo) > foldlevel(JumpCursorOnEdit_foo - 1)) |
+            \        let JumpCursorOnEdit_foo = JumpCursorOnEdit_foo - 1 |
+            \        let b:doopenfold = 2 |
+            \     endif |
+            \     exe JumpCursorOnEdit_foo |
+            \   endif |
+            \ endif
+   " Need to postpone using "zv" until after reading the modelines.
+   autocmd BufWinEnter *
+            \ if exists("b:doopenfold") |
+            \   exe "normal zv" |
+            \   if(b:doopenfold > 1) |
+            \       exe  "+".1 |
+            \   endif |
+            \   unlet b:doopenfold |
+            \ endif
+augroup END
+
+" spaces instead of tabs
+set expandtab
+set smarttab
+" tab width of 4 spaces
+set shiftwidth=4
+set softtabstop=4
+
+" syntastic configuration
+let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_mode_map =  { 'mode': 'active',
+                            \ 'active_filetypes': ['python', 'ruby'],
+                            \ 'passive_filetypes': [] }
+
