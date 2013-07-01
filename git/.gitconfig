@@ -1,0 +1,43 @@
+[mergetool "kdiff3"]
+    path = /applications/kdiff3.app/Contents/MacOS/kdiff3
+    keepBackup = false
+    trustExitCode = false
+[difftool "kdiff3"]
+    path = /applications/kdiff3.app/Contents/MacOS/kdiff3
+    keepBackup = false
+    trustExitCode = false
+[color]
+    ui = true
+[alias]
+    st = status
+    ch = checkout
+    sui = submodule update --init --recursive
+    lg = log --graph --pretty=format:'%Cred%h%Creset %Cgreen(%cr)%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an>' --abbrev-commit --date=relative
+    pr = pull --rebase
+    fo = fetch origin
+    cm = commit -m
+    lf = log --follow -p
+    po = push origin
+    rc = rebase --continue
+    b = branch
+    br = branch -r
+[user]
+    e-mail = {TODO}
+    name = James Ross
+    email = {TODO}
+[git-p4]
+    user = jamesr
+    port = s1.local:1666
+    useclientspec = false
+    skipSubmitEdit = true
+[core]
+    autocrlf = input
+    excludesfile = /Users/jamesr/.gitignore
+[difftool "Kaleidoscope"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[diff]
+    tool = Kaleidoscope
+[difftool]
+    prompt = false
+[merge]
+    tool = kdiff3
