@@ -111,5 +111,9 @@ set softtabstop=4
 let g:syntastic_python_checkers=['pyflakes']
 let g:syntastic_mode_map =  { 'mode': 'active',
                             \ 'active_filetypes': ['python', 'ruby'],
-                            \ 'passive_filetypes': [] }
+                            \ 'passive_filetypes': ['obj_cpp', 'obj_c', 'c', 'cpp'] }
+
+" Fixes a bug with vim airline that prevents it from showing up until a new
+" split is opened
+set laststatus=2
 
